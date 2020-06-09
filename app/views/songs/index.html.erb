@@ -1,5 +1,15 @@
-<body>
+
+<table>
+<tr>
+    <th>Song</th>
+    <th>Artist</th>
+</tr>
+<tbody>
 <% @songs.each do |x| %>
-    <p><%= x.title %> by <%= x.artist_name %></p>
+    <tr>
+    <td><%= x.title %></td>
+    <td><%= x.artist_name %></td>
+    </tr>
 <% end %>
-</body>
+</tbody>
+</table
