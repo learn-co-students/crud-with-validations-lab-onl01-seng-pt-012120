@@ -11,8 +11,7 @@ class SongsController < ApplicationController
     def create
         @song=Song.new(song_params)
         #use new NOT create method to save song instance 
-        if @song.valid?
-            @song.save
+        if @song.save
             redirect_to song_path(@song)
         else
             render :new
@@ -26,22 +25,15 @@ class SongsController < ApplicationController
 
     def edit
         set_song! 
-        if @song 
-            render :edit 
-        else
-            redirect_to songs_path
-        end
-        #isn't the if else block implicit?
     end
 
     def update
         set_song!
-        @song=Song.update(song_params)
-        if @song.valid?
-            @song.save
+        @song.update(song_params)
+        if @song.save
             redirect_to song_path(@song)
         else
-            render :index
+            render :edit
         end
     end
 
