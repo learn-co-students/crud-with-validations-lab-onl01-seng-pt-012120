@@ -1,0 +1,12 @@
+<h1>Welcome, here are your songs.</h1>
+
+    <div>
+        <ul>
+            <% @songs.each do |song| %>
+                <li>
+                    <%= Song.title %>
+                    <%= link_to "Delete", person, method: :delete, data: { confirm: "Really?" } %>
+                </li>
+            <% end %>
+        </ul>
+    </div>
