@@ -12,51 +12,58 @@ class SongsController < ApplicationController
     # t.datetime "created_at",   null: false
     # t.datetime "updated_at",   null: false
 
-       def index
-        @songs = Song.all
-       end 
+    before_action :set_post!, only: [:show, :edit, :update, :delete, :destroy]
 
-    def show
-        @song = Song.find(params[:id])
-      end
+    def index 
+        @songs = Song.all 
+    end
+
+    def new 
+        @song = Song.new 
+    end 
     
-      def new
-        @song = Song.new
-      end
-    
-      def create
-        @song = Song.new(author_params)
-    
-        if @song.valid?
-          @song.save
-          redirect_to author_path(@author)
+    def create 
+        @song = Song.new(song_params)
+
+        if @song.save
+            redirect_to song_path(@song)
         else
-          render :new
+            render :new
         end
-      end
-    
-      def edit
-        @song = Song.find(params[:id])
-      end
-    
-      def update
-        @song = Song.find(params[:id])
-        if @song.valid?
-            @song.update(author_params)
-          redirect_to author_path(@song)
+    end
+
+    def show 
+    end
+
+    def edit 
+    end
+
+    def update 
+        if @song.update(song_params)
+            redirect_to song_path(@song)
         else
-          render :edit
+            render :edit 
         end
-      end
-    
-      def destroy
-        @song.destroy!
+    end
+
+    def delete
+    end
+
+    def destroy 
+        @song.destroy
         redirect_to songs_path
-      end
+    end
 
-      private
-    
-      def song_params
-        params.permit( :title, :released, release_year, artist_name, genre)
-      end
+    private
+
+    def set_post!
+        @song = Song.find(params[:id])
+    end
+
+    def song_params
+        params.require(:song).permit(
+            :title, :released, :release_year, :artist_name, :genre
+          )
+    end
+
 end

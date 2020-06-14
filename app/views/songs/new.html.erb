@@ -1,24 +1,5 @@
 
-<% if @post.errors.any? %>
-<div id="error_explanation">
-  <h2>
-    <%= pluralize(@post.errors.count, "error") %>
-    prohibited this post from being saved:
-  </h2>
 
-  <ul>
-  <% @post.errors.full_messages.each do |msg| %>
-    <li><%= msg %></li>
-  <% end %>
-  </ul>
-</div>
-<% end %>
+<h1>New Song</h1>
 
-<%= form_for @song do |f| %>
-    <%= f.text_field :title %>
-    <%= f.text_area :released %>
-    <%= f.text_area :released_year %>
-    <%= f.text_area :artist_name %>
-    <%= f.text_area :genre %>
-    <%= f.submit %>
-  <% end %>
+<%= render 'form' %>

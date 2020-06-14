@@ -1,21 +1,14 @@
 class Song < ApplicationRecord
-    validates :title, presence: true, uniqueness: {scope: :year, message: "should happen once per year"}
-    validates :released, inclusion:  {in: [true , false]
-    validates :artist_name, presence:
+  validates :title, presence: true 
+  validates_uniqueness_of :title, scope: [:artist_name, :release_year]
+  validates :released, inclusion: { in: [true, false] }
+  with_options if: :released? do |s|
+      s.validates :release_year, presence: true
+      s.validates :release_year, numericality: { less_than_or_equal_to: Date.today.year }
+  end
+  validates :artist_name, presence: true
 
-
-    validate :release_year
-
-    def release_year
-        if self.released
-            unless self.release_year
-            errors.add(:release_year, " Song must have a realease year")
-            else
-             now = Time.new
-       if now.year < self.release_year
-              errors.add(:realese_year, "Release year is future")
-
-         end
-       end
-     end
-    end
+  def released?
+      released
+  end
+end
